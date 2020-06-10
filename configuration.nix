@@ -58,6 +58,37 @@ in
     configPath = ./secrets/v2ray/config.json;
   };
 
+  # networking.resolvconf.useLocalResolver = true;
+
+  services.coredns = {
+    enable = false;
+    config = ''
+.:53 {
+    forward . 127.0.0.1:5303 127.0.0.1:5302 127.0.0.1:5301
+    log
+    health
+}
+.:5301 {
+   forward . tls://9.9.9.9 {
+       tls_servername dns.quad9.net
+   }
+   cache
+}
+.:5302 {
+    forward . tls://1.1.1.1 tls://1.0.0.1 {
+        tls_servername 1dot1dot1dot1.cloudflare-dns.com
+    }
+    cache
+}
+.:5303 {
+    forward . tls://8.8.8.8 tls://8.8.4.4 {
+        tls_servername dns.google
+    }
+    cache
+}
+'';
+  };
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -76,7 +107,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    binutils clang llvm git
+    binutils clang llvm git git-crypt
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
