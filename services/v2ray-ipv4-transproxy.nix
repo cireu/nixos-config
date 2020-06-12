@@ -56,9 +56,10 @@ in {
     systemd.services.v2ray-ipv4-transproxy = let
       ipt = "${iptables}/bin/iptables";
       preStartScript = pkgs.writeShellScript "v2ray-prestart" ''
-        ${ipt} -t nat -F ${tag}
         ${ipt} -t nat -N ${tag}
         ${ipt} -t nat -A ${tag} -j RETURN -m owner --uid-owner ${v2rayUserName}
+        ${ipt} -t nat -A ${tag} -d 0.0.0.0/8 -j RETURN
+        ${ipt} -t nat -A ${tag} -d 127.0.0.0/8 -j RETURN
         ${ipt} -t nat -A ${tag} -p tcp -j REDIRECT --to-ports ${redirProxyPortStr}
         ${ipt} -t nat -A OUTPUT -p tcp -j ${tag}
         '';
