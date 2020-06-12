@@ -19,6 +19,12 @@ let
       # FIXME: Description
     };
 
+    package = mkOption {
+      type = types.package;
+      description = "The V2Ray package to use";
+      default = pkgs.v2ray;
+    };
+
     v2rayUserName = mkOption {
       type = types.str;
       default = "v2ray";
