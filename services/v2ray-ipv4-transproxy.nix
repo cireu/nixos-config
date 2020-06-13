@@ -3,11 +3,10 @@
 with lib;
 
 let
-  inherit (pkgs) gnugrep iptables v2ray;
+  inherit (pkgs) gnugrep iptables;
   inherit (lib) optionalString mkIf;
   cfg = config.services.v2ray-ipv4-transproxy;
-  inherit (cfg) v2rayUserName;
-  inherit (cfg) configPath;
+  inherit (cfg) v2rayUserName configPath package;
   redirProxyPortStr = toString cfg.redirPort;
 
   tag = "V2RAY_SPEC";
@@ -80,7 +79,7 @@ in {
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       script =
-        "exec ${v2ray}/bin/v2ray -config ${toString configPath}";
+        "exec ${package}/bin/v2ray -config ${toString configPath}";
 
       # Don't start if the config file doesn't exist.
       unitConfig = { ConditionPathExists = configPath; };
