@@ -52,11 +52,27 @@ in
   networking.interfaces.enp4s0.useDHCP = true;
   networking.interfaces.wlp0s20u9.useDHCP = true;
 
-  services.v2ray-ipv4-transproxy = {
-    enable = true;
-    redirPort = 7892;
-    configPath = ./secrets/v2ray/config.json;
-  };
+  services.v2ray-ipv4-transproxy = let
+    assets = {
+      "geoip.dat" = pkgs.fetchurl {
+        url = "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/202006130214/geoip.dat";
+        sha256 = "273d10dc8dede54a55bc2caeb9220eedd88a4f6f2a9d0631b93837faf38aab75";
+      };
+      "geosite.dat" = pkgs.fetchurl {
+        url = "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/202006130214/geosite.dat";
+        sha256 = "992929d803ef5bf6750111603fcfd42f8763806248494437e19bed580a6d1cbf";
+      };
+    };
+    v2ray = pkgs.v2ray.override {
+      inherit assets;
+    };
+  in
+    {
+      enable = true;
+      package = v2ray;
+      redirPort = 7892;
+      configPath = ./secrets/v2ray/config.json;
+    };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
