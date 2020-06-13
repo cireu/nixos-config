@@ -32,7 +32,9 @@ in
       noto-fonts-cjk
       noto-fonts-emoji
       emacs-all-the-icons-fonts
-    ] ++ [ unstablePkg.sarasa-gothic ];
+    ] ++ [
+      unstablePkg.sarasa-gothic # For Slab variant
+    ];
     fontconfig = {
       defaultFonts = {
         monospace = [ "Sarsa Mono SC" "DejaVu Sans Mono" ];
