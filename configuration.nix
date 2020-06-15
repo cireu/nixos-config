@@ -11,6 +11,7 @@ in
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./services/v2ray-ipv4-transproxy.nix
+      ./services/guix.nix
     ];
 
   nix.binaryCaches = [
@@ -75,6 +76,8 @@ in
       redirPort = 7892;
       configPath = ./secrets/v2ray/config.json;
     };
+
+  services.guix-daemon.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
