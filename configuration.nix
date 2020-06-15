@@ -98,6 +98,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     binutils clang llvm git git-crypt
+    libsForQt5.fcitx-qt5
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
