@@ -27,6 +27,8 @@ in
     useOSProber = true;
   };
 
+  environment.homeBinInPath = true;
+
   fonts = {
     fonts = with pkgs; [
       noto-fonts
