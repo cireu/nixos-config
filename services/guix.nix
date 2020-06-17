@@ -52,9 +52,14 @@ in
       description = "Guix daemon";
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        ExecStart = "/var/guix/profiles/per-user/root/current-guix/bin/guix-daemon --build-users-group=guixbuild";
+        ExecStart = ''
+        /var/guix/profiles/per-user/root/current-guix/bin/guix-daemon --build-users-group=guixbuild --substitute-urls="https://mirror.guix.org.cn"
+        '';
         RemainAfterExit = true;
-        Environment = "'GUIX_LOCPATH=/var/guix/profiles/per-user/root/guix-profile/lib/locale' LC_ALL=en_US.utf8";
+        Environment = ''
+        'GUIX_LOCPATH=/var/guix/profiles/per-user/root/guix-profile/lib/locale' LC_ALL=en_US.utf8
+        '';
+
         # Some packages (e.g. go@1.8.1) may require even more than 1024 tasks.
         TasksMax = "8192";
       };
