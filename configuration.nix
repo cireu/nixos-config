@@ -144,6 +144,14 @@ in
 
   programs.gnupg.agent.enable = true;
 
+  services.emacs = let
+    emacsPretest = with pkgs; callPackage ./pkgs/emacs {};
+  in
+    {
+      enable = true;
+      package = emacsPretest;
+    };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
    users.users.citreu = {
      isNormalUser = true;
