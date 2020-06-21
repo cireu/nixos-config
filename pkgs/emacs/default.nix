@@ -10,7 +10,11 @@ emacs.overrideAttrs(old: {
   };
   buildInputs = old.buildInputs ++ [ cairo jansson harfbuzz ];
   configureFlags =
-    old.configureFlags ++ [ "--with-cairo" "--without-imagemagick" ];
+    old.configureFlags ++
+    [ "--with-cairo"
+      "--without-imagemagick"
+      "--without-compress-install"
+    ];
   patches = [
     ./tramp-detect-wrapped-gvfsd-27.patch
     ./clean-env.patch
