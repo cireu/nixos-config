@@ -6,7 +6,7 @@ emacs.overrideAttrs(old: {
   name = "emacs-pretest-27.0.91";
   src = fetchurl {
     url = https://mirrors.tuna.tsinghua.edu.cn/gnu-alpha/emacs/pretest/emacs-27.0.91.tar.xz;
-    sha256 = "0ykwxdylfnhkys5isq08mhip0fc41lv0gkl9pq8rimnbrr475cb5";
+    sha256 = "1aj52fymw4iq9n5sahpb3wncm0cvshwmjr3833mirj6yhp9kv0cn";
   };
   buildInputs = old.buildInputs ++ [ cairo jansson harfbuzz ];
   configureFlags =
